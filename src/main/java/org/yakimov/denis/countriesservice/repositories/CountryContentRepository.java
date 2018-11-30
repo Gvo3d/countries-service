@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import org.yakimov.denis.countriesservice.models.CountryContent;
 
 @Repository
-public interface CountryContentRepository extends ReactiveMongoRepository<CountryContent, Long> {
+public interface CountryContentRepository extends ReactiveMongoRepository<CountryContent, String> {
 }

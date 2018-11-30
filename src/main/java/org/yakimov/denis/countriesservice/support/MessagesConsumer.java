@@ -11,7 +11,7 @@ public class MessagesConsumer implements Consumer<JsonNode> {
 
     @Override
     public void accept(JsonNode jsonNode) {
-        if (message!=null) {
+        if (message==null) {
             message = jsonNode.asText();
         }
     }

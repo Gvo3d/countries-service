@@ -10,9 +10,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "country_data")
 public class CountryContent {
     @Id
-    private Long id;
+    private String id;
     private String countryName;
+    private String message;
     private Status status;
     private Date requestDate;
-    private FileData fileData;
+    private String fileName;
+    private String fileContent;
+    private String archiveName;
 }

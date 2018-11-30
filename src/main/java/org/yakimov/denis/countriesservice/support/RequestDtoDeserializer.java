@@ -20,14 +20,13 @@ public class RequestDtoDeserializer extends StdDeserializer<RequestDto> {
         this(null);
     }
 
-    private MessagesConsumer consumer = new MessagesConsumer();
-
     @Override
     public RequestDto deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
 
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
         JsonNode response = node.get(Constants.RESTRESPONSE);
         JsonNode messages = response.get(Constants.MESSAGES);
+        MessagesConsumer consumer = new MessagesConsumer();
         messages.elements().forEachRemaining(consumer);
         JsonNode data = response.get(Constants.RESULT);
         String name = null;

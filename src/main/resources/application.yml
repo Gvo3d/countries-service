@@ -1,6 +1,11 @@
-service:
-  country-url: http://services.groupkt.com/country/get/iso2code/
 spring:
   data:
     mongodb:
-      uri: mongodb://35.165.83.26:27017
+      database: countries
+      host: 35.165.83.26
+      port: 27017
+      username: cntr
+      password: password
+
+service:
+  countryurl: http://services.groupkt.com/country/get/iso2code/

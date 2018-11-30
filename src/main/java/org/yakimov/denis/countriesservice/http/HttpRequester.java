@@ -11,26 +11,26 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.yakimov.denis.countriesservice.dtos.RequestDto;
+import org.yakimov.denis.countriesservice.models.FileData;
 import org.yakimov.denis.countriesservice.models.Status;
 import org.yakimov.denis.countriesservice.support.Constants;
+import org.yakimov.denis.countriesservice.support.DataProcessor;
 import org.yakimov.denis.countriesservice.support.RequestDtoDeserializer;
+import org.apache.log4j.Logger;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.*;
 
 @Component
 public class HttpRequester {
+    private static final Logger LOGGER = Logger.getLogger(HttpRequester.class);
     private static final RequestConfig CONFIG = RequestConfig.custom().setConnectTimeout(Constants.CONNECT_TIMEOUT).setConnectionRequestTimeout(Constants.CONNECT_TIMEOUT).setSocketTimeout(Constants.CONNECT_TIMEOUT).build();
 
-    private HttpGet get;
     private ObjectMapper mapper = new ObjectMapper();
     private CloseableHttpClient httpClient;
 
-    @Value("service.country-url")
+    @Value("${service.countryurl}")
     private String countryServiceUrl;
 
 
@@ -40,22 +40,33 @@ public class HttpRequester {
         SimpleModule module = new SimpleModule();
         module.addDeserializer(RequestDto.class, new RequestDtoDeserializer());
         mapper.registerModule(module);
-        get = new HttpGet(countryServiceUrl);
     }
 
 
-    public List<RequestDto> processRequest(Collection<String> data){
-        return data.stream().map(this::request).collect(Collectors.toList());
+    public Map<RequestDto, FileData> processRequest(List<FileData> data){
+        Map<RequestDto, FileData> result = new HashMap<>();
+
+        for (FileData current: data){
+            for (String currentIsoCode: DataProcessor.getIsoCodesFromFileData(current)){
+                Map.Entry<RequestDto, FileData> requestData = this.request(currentIsoCode, current);
+                result.put(requestData.getKey(), requestData.getValue());
+            }
+        }
+
+        return result;
     }
 
 
-    private RequestDto request(String ISOCode){
+    private Map.Entry<RequestDto, FileData> request(String isoCode, FileData data){
         try {
+            String url = countryServiceUrl+isoCode;
+            HttpGet get = new HttpGet(url);
+            LOGGER.info(String.format(Constants.REQUESTING, url));
             CloseableHttpResponse response = httpClient.execute(get);
             String body = EntityUtils.toString(response.getEntity(), Constants.UTF_8);
-            return mapper.readValue(body, RequestDto.class);
+            return new AbstractMap.SimpleImmutableEntry<>(mapper.readValue(body, RequestDto.class), data);
         } catch (IOException e) {
-            return new RequestDto(String.format(Constants.ERROR, e.getLocalizedMessage()), null, ISOCode, Status.ERROR);
+            return new AbstractMap.SimpleImmutableEntry<>(new RequestDto(String.format(Constants.ERROR, e.getLocalizedMessage()), null, isoCode, Status.ERROR), data);
         }
     }
 }
