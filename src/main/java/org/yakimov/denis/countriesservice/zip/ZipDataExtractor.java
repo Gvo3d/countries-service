@@ -2,9 +2,8 @@ package org.yakimov.denis.countriesservice.zip;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import org.yakimov.denis.countriesservice.dtos.FileDto;
 import org.yakimov.denis.countriesservice.exceptions.EmptyFileException;
-import org.yakimov.denis.countriesservice.models.FileData;
-import org.yakimov.denis.countriesservice.models.ZipArchive;
 import org.yakimov.denis.countriesservice.support.Constants;
 import org.yakimov.denis.countriesservice.support.DataProcessor;
 
@@ -21,14 +20,14 @@ import java.util.zip.ZipInputStream;
 @Component
 public class ZipDataExtractor {
 
-    public List<FileData> getContent(MultipartFile multipartFile) throws IOException, EmptyFileException {
+    public List<FileDto> getContent(MultipartFile multipartFile) throws IOException, EmptyFileException {
         if (multipartFile.isEmpty() || multipartFile.getSize()<1){
             throw new EmptyFileException();
         }
 
-        List<FileData> result = new ArrayList<>();
+        List<FileDto> result = new ArrayList<>();
 
-        ZipArchive archive = DataProcessor.generateArchive(multipartFile);
+        String archiveName = multipartFile.getOriginalFilename();
 
         FileInputStream inputStream = null;
         File tempZipArchive = null;
@@ -36,7 +35,6 @@ public class ZipDataExtractor {
             tempZipArchive = File.createTempFile(Constants.ZIPPREFIX, Constants.ZIPSUFFIX);
             multipartFile.transferTo(tempZipArchive);
             inputStream = new FileInputStream(tempZipArchive);
-
             ZipInputStream zis = new ZipInputStream(inputStream);
 
             ZipEntry entry;
@@ -50,7 +48,7 @@ public class ZipDataExtractor {
                 zis.closeEntry();
                 outputStream.close();
 
-                result.add(DataProcessor.generateFileData(archive, entry.getName(), outputStream));
+                result.add(DataProcessor.generateFileData(archiveName, entry.getName(), outputStream));
             }
 
         } finally {

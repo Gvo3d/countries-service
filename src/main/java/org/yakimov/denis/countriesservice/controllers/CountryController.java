@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.yakimov.denis.countriesservice.exceptions.EmptyFileException;
 import org.yakimov.denis.countriesservice.models.CountryContent;
+import org.yakimov.denis.countriesservice.models.Status;
 import org.yakimov.denis.countriesservice.services.CountryService;
 import org.yakimov.denis.countriesservice.support.Constants;
 import org.yakimov.denis.countriesservice.zip.ZipDataExtractor;
-import reactor.core.publisher.Flux;
 
 import java.io.IOException;
 
@@ -29,7 +29,7 @@ public class CountryController {
 
     @RequestMapping(method= RequestMethod.POST,
             produces={MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Flux<CountryContent>> request(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Object> request(@RequestParam("file") MultipartFile file) {
         String zipName = file.getOriginalFilename();
         LOGGER.info(String.format(Constants.PROCESSING, zipName));
         try {
@@ -39,7 +39,10 @@ public class CountryController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (EmptyFileException e) {
             LOGGER.warn(Constants.EMPTY_FILE);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            CountryContent content = new CountryContent();
+            content.setStatus(Status.NO_CONTENT);
+            content.setMessage(Constants.EMPTY_FILE);
+            return new ResponseEntity<>(content,HttpStatus.BAD_REQUEST);
         }
     }
 }

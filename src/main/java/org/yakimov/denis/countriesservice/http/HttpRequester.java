@@ -10,8 +10,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.yakimov.denis.countriesservice.dtos.FileDto;
 import org.yakimov.denis.countriesservice.dtos.RequestDto;
-import org.yakimov.denis.countriesservice.models.FileData;
 import org.yakimov.denis.countriesservice.models.Status;
 import org.yakimov.denis.countriesservice.support.Constants;
 import org.yakimov.denis.countriesservice.support.DataProcessor;
@@ -43,12 +43,12 @@ public class HttpRequester {
     }
 
 
-    public Map<RequestDto, FileData> processRequest(List<FileData> data){
-        Map<RequestDto, FileData> result = new HashMap<>();
+    public Map<RequestDto, FileDto> processRequest(List<FileDto> data){
+        Map<RequestDto, FileDto> result = new HashMap<>();
 
-        for (FileData current: data){
+        for (FileDto current: data){
             for (String currentIsoCode: DataProcessor.getIsoCodesFromFileData(current)){
-                Map.Entry<RequestDto, FileData> requestData = this.request(currentIsoCode, current);
+                Map.Entry<RequestDto, FileDto> requestData = this.request(currentIsoCode, current);
                 result.put(requestData.getKey(), requestData.getValue());
             }
         }
@@ -57,7 +57,7 @@ public class HttpRequester {
     }
 
 
-    private Map.Entry<RequestDto, FileData> request(String isoCode, FileData data){
+    private Map.Entry<RequestDto, FileDto> request(String isoCode, FileDto data){
         try {
             String url = countryServiceUrl+isoCode;
             HttpGet get = new HttpGet(url);
