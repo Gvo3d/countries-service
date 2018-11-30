@@ -30,6 +30,7 @@ public class DataProcessor {
             content.setFileName(entry.getValue().getFileName());
             content.setRequestDate(new Date());
             content.setCountryName(entry.getKey().getName());
+            content.setCountryCode(entry.getKey().getAlpha2Code());
             content.setStatus(entry.getKey().getStatus());
             content.setMessage(entry.getKey().getMessage());
             results.add(content);

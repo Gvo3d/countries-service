@@ -8,9 +8,6 @@ configuration: https://ianlondon.github.io/blog/mongodb-auth/
 mongo
 use countries
 db.createUser({user: 'cntr',pwd: 'password',roles: [{ role: 'readWrite', db:'countries'}]})
-db.sequence.insert({_id: "zip",seq: 0})
-db.sequence.insert({_id: "file",seq: 0})
-db.sequence.insert({_id: "country",seq: 0})
 sudo vim /etc/mongod.conf
 NOT COMMENT THE LINE: #  bindIp: 127.0.0.1  <- comment out this line
 BUT TO CHANGE TO: bindId: 0.0.0.0

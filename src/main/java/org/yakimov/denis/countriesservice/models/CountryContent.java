@@ -1,5 +1,6 @@
 package org.yakimov.denis.countriesservice.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import java.util.Date;
 
@@ -12,12 +13,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @ToString(exclude = {"fileContent"})
 public class CountryContent {
     @Id
+    @JsonIgnore
     private String id;
     private String countryName;
+    private String countryCode;
+    @JsonIgnore
     private String message;
     private Status status;
     private String fileName;
+    @JsonIgnore
     private String fileContent;
+    @JsonIgnore
     private String archiveName;
+    @JsonIgnore
     private Date requestDate;
 }
