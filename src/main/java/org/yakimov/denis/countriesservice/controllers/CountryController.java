@@ -31,7 +31,7 @@
 //        String zipName = file.getOriginalFilename();
 //        LOGGER.info(String.format(Constants.PROCESSING, zipName));
 //        try {
-//            return new ResponseEntity<>(countryService.getContent(file), HttpStatus.OK);
+//            return new ResponseEntity<>(countryService.getContent(file, null), HttpStatus.OK);
 //        } catch (IOException e) {
 //            LOGGER.warn(Constants.UNKNOWN, e);
 //            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
