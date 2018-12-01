@@ -20,7 +20,7 @@ public class Constants {
     public static final String UNKNOWN = "Unknown error!";
     public static final String EMPTY_FILE = "Zip file was empty, can't process that file";
     public static final long SIZE = 10;
-    public static final String SEQUENCE_ZIP= "zip";
-    public static final String SEQUENCE_FILE= "file";
-    public static final String SEQUENCE_COUNTRY= "country";
+    public static final String FILE_PARAM= "file";
+    public static final String SESSION_MARKER = "session";
+    public static final String URL = "/countries/{"+SESSION_MARKER+"}";
 }
