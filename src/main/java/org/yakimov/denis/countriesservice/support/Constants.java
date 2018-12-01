@@ -23,4 +23,5 @@ public class Constants {
     public static final String FILE_PARAM= "file";
     public static final String SESSION_MARKER = "session";
     public static final String URL = "/countries/{"+SESSION_MARKER+"}";
+    public static final String SESSION_URL = "/session";
 }

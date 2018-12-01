@@ -18,9 +18,7 @@ import org.yakimov.denis.countriesservice.support.Constants;
 import java.io.IOException;
 import java.util.Objects;
 
-import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
-import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
-import static org.springframework.web.reactive.function.server.RequestPredicates.queryParam;
+import static org.springframework.web.reactive.function.server.RequestPredicates.*;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 import static org.springframework.web.reactive.function.server.ServerResponse.status;
 
@@ -46,7 +44,12 @@ public class WebConfiguration {
                         LOGGER.warn(e);
                         ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BodyInserters.fromObject(Status.ERROR));
                     }
-                    return ServerResponse.ok().body(BodyInserters.fromObject(Status.SUCCESS));
-                }));
+                    return ServerResponse.status(HttpStatus.PROCESSING).body(BodyInserters.fromObject(Status.SUCCESS));
+                }))
+
+                .and(route(GET(Constants.SESSION_URL),
+                        req -> req.session()
+                                .flatMap(x-> ServerResponse.status(HttpStatus.SWITCHING_PROTOCOLS)
+                                        .body(BodyInserters.fromObject(x.getId())))));
     }
 }

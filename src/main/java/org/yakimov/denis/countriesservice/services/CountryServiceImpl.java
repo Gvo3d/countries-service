@@ -2,6 +2,7 @@ package org.yakimov.denis.countriesservice.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.codec.multipart.FilePart;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
 import org.yakimov.denis.countriesservice.dtos.FileDto;
 import org.yakimov.denis.countriesservice.dtos.RequestDto;
@@ -11,13 +12,15 @@ import org.yakimov.denis.countriesservice.models.CountryContent;
 import org.yakimov.denis.countriesservice.repositories.CountryContentRepository;
 import org.yakimov.denis.countriesservice.support.DataProcessor;
 import org.yakimov.denis.countriesservice.zip.ZipDataExtractor;
-import reactor.core.publisher.Flux;
 
 import java.io.IOException;
 import java.util.*;
 
 @Service
 public class CountryServiceImpl implements CountryService {
+
+    @Autowired
+    private SimpMessageSendingOperations messagingTemplate;
 
     @Autowired
     private CountryContentRepository repository;
