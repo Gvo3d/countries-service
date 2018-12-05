@@ -1,0 +1,24 @@
+<div class="container">
+  <table class="table table-striped ml-1">
+    <div class="well" *ngIf="!isEmpty">
+      <button class="btn btn-info btn-block" (click)="isRegionSelected = false; selectedRegionOnMap = 'Ukraine'">Назад
+      </button>
+      <thead class="table-light">
+      <tr>
+        <th>countryName</th>
+        <th>countryCode</th>
+        <th>status</th>
+        <th>fileName</th>
+      </tr>
+      </thead>
+      <tbody class="table-light">
+      <tr *ngFor="let country of responses">
+        <td class="w-25">{{country.countryName}}</td>
+        <td class="w-25">{{country.countryCode}}</td>
+        <td class="w-25">{{country.status}}</td>
+        <td class="w-25">{{country.fileName}}</td>
+      </tr>
+      </tbody>
+    </div>
+  </table>
+</div>

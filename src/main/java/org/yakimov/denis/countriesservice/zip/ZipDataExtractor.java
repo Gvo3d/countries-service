@@ -21,14 +21,14 @@ import java.util.zip.ZipInputStream;
 @Component
 public class ZipDataExtractor {
 
-    public List<FileDto> getContent(FilePart multipartFile) throws IOException, EmptyFileException {
-//        if (multipartFile.isEmpty() || multipartFile.getSize()<1){
-//            throw new EmptyFileException();
-//        }
+    public List<FileDto> getContent(MultipartFile multipartFile) throws IOException, EmptyFileException {
+        if (multipartFile.isEmpty() || multipartFile.getSize()<1){
+            throw new EmptyFileException();
+        }
 
         List<FileDto> result = new ArrayList<>();
 
-        String archiveName = multipartFile.filename();
+        String archiveName = multipartFile.getOriginalFilename();
 
         FileInputStream inputStream = null;
         File tempZipArchive = null;

@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="jumbotron" *ngIf="applicationService.data.session!=null; else waiting">
+    <h1 class="cent-align" style="text-align: center">Countries ISO codes service</h1>
+    <p>Please, load the zip file to the remote server:</p>
+    <div class="well">
+      <div class="form-group" [formGroup]="form">
+        <label for="file">Choose File</label>
+        <input type="file"
+               id="file"
+               (change)="handleFileInput($event)"
+               #file>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #waiting>
+    <div class="row">
+      <div class="col-md-2 col-md-offset-5">
+        <img class="img-responsive img-centered" src="assets/images/loading-ttcredesign.gif" alt="loading"/></div>
+    </div>
+  </ng-template>
+</div>

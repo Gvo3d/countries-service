@@ -6,6 +6,12 @@ spring:
       port: 27017
       username: cntr
       password: password
+  http:
+    multipart:
+      enabled: false
+
+server:
+  port: 8081
 
 service:
   countryurl: http://services.groupkt.com/country/get/iso2code/
