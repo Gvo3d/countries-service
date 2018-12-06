@@ -10,6 +10,7 @@ import {FormControl, FormGroup} from "@angular/forms";
 
 export class HeaderComponent {
   private onLoad;
+  private data: number;
   form: FormGroup;
   @ViewChild('file') file: ElementRef;
 
@@ -18,6 +19,7 @@ export class HeaderComponent {
     this.form = new FormGroup({
       file: new FormControl()
     });
+    this.data = 0;
   }
 
   handleFileInput(event) {
@@ -28,8 +30,25 @@ export class HeaderComponent {
     this.applicationService.rest.doPost(Constants.getFileUploadUrl()+this.applicationService.data.session, body).subscribe(x=> {
       const result :string = x.text();
        console.log("Operation status: "+result);
+       if (result=='"SUCCESS"'){
+         this.data = 1;
+       } else {
+         this.data = 2;
+       }
       this.clearFile();
-    })
+    }, error1 => {this.data = 2;
+    console.log(error1.toString())})
+  }
+
+  public getColor(data){
+    switch (data) {
+      case 0:
+        return 'black';
+      case 1:
+        return 'green';
+      case 2:
+        return 'red';
+    }
   }
 
   clearFile() {

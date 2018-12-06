@@ -1,6 +1,5 @@
 package org.yakimov.denis.countriesservice.controllers;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +12,6 @@ import org.yakimov.denis.countriesservice.models.CountryContent;
 import org.yakimov.denis.countriesservice.models.Status;
 import org.yakimov.denis.countriesservice.services.CountryService;
 import org.yakimov.denis.countriesservice.support.Constants;
-import org.yakimov.denis.countriesservice.support.JacksonView;
 import reactor.core.publisher.Flux;
 
 import java.io.IOException;
@@ -27,7 +25,6 @@ public class CountryController {
     private CountryService countryService;
 
     @CrossOrigin("*")
-    @JsonView(JacksonView.Normal.class)
     @RequestMapping(value = "/{session}", method= RequestMethod.POST,
             produces={MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Status> request(@RequestParam(value="file", required = true) MultipartFile file, @PathVariable("session") String session) {
@@ -48,7 +45,6 @@ public class CountryController {
 
 
     @CrossOrigin("*")
-    @JsonView(JacksonView.Full.class)
     @RequestMapping(value = "/{code}",method= RequestMethod.GET,
             produces={MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Flux<CountryContent>> request(@PathVariable("code") String code) {

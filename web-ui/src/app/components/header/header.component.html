@@ -1,8 +1,8 @@
 <div class="container">
   <div class="jumbotron" *ngIf="applicationService.data.session!=null; else waiting">
-    <h1 class="cent-align" style="text-align: center">Countries ISO codes service</h1>
+    <h1 class="cent-align" [ngStyle]="{'color':getColor(this.data)}">Countries ISO codes service</h1>
     <p>Please, load the zip file to the remote server:</p>
-    <div class="well" id="well" #well>
+    <div id="well" class="well" #well>
       <div class="form-group" [formGroup]="form">
         <label for="file">Choose File</label>
         <input type="file"
