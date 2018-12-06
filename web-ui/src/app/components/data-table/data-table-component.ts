@@ -13,7 +13,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
   @Input()
   private responseObs: Observable<Response>;
   private responseSubscription: Subscription;
-  private isEmpty: boolean;
+  isEmpty: boolean;
   responses: Response[];
 
   constructor(private applicationService: ApplicationService) {
