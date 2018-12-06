@@ -10,6 +10,7 @@ import {Constants} from "../utils/constants";
 import {SubscribedMessage} from "../model/socket-message-dto";
 import {Subscription} from "rxjs/Subscription";
 import {DataService} from "./data.service";
+import {Response} from "../model/response-dto";
 
 
 /*
@@ -17,19 +18,17 @@ For socket connection. For using disable comments in constructor for "establishS
  */
 
 @Injectable()
-export class WebSocketService implements OnDestroy {
-
-  private messageSource = new Subject<any>();
-  messageReceived: Observable<any> = this.messageSource.asObservable();
+export class WebSocketService {
   private stompClient: Client;
   private stompClientSubscriber: Subscription;
 
   constructor(private rest: RestService, private data: DataService) {
-    //this.establishSocketConnection();
+    this.init();
   }
 
   public init(): void {
     console.log("Trying to establish WS connection to remote server");
+    var result;
     this.rest.doGet(Constants.getSessionUrl()).subscribe(x => {
       this.data.session = x.text();
       console.log("Got identity from remote server: "+x.text());
@@ -73,12 +72,11 @@ export class WebSocketService implements OnDestroy {
   // }
 
   private onMessage(message: Message) {
-    let json: JSON = JSON.parse(message.body);
-    this.messageSource.next(json);
-    console.log(json)
+    let data: Response = JSON.parse(message.body);
+    this.data.insertMessage(data);
   }
 
-  ngOnDestroy(): void {
+  destroy(): void {
     this.stompClientSubscriber.unsubscribe();
     this.stompClient.disconnect(() => {});
   }

@@ -27,6 +27,7 @@ public class CountryController {
     @Autowired
     private CountryService countryService;
 
+    @CrossOrigin("*")
     @RequestMapping(value = "/{session}", method= RequestMethod.POST,
             produces={MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Status> request(@RequestParam(value="file", required = true) MultipartFile file, @PathVariable("session") String session) {

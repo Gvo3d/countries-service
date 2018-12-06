@@ -17,6 +17,7 @@ import org.yakimov.denis.countriesservice.support.Constants;
 @Controller
 public class GreetingController {
 
+    @CrossOrigin("*")
     @MessageMapping("/private")
     public void greeting2(ArchiveDto incoming) throws Exception {
         String zipName = incoming.getFileName();

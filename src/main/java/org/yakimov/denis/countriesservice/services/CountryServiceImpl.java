@@ -49,7 +49,8 @@ public class CountryServiceImpl implements CountryService {
         }
         for (CountryContent content: resultList) {
             Mono<CountryContent> mono = repository.save(content);
-            messagingTemplate.convertAndSendToUser(sessionId, "/queue/reply", mono, createHeaders(sessionId));
+            CountryContent result = mono.block();
+            messagingTemplate.convertAndSendToUser(sessionId, "/queue/reply", result, createHeaders(sessionId));
         }
     }
 

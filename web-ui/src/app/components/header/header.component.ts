@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, Renderer2, TemplateRef, ViewChild} from '@angular/core';
 import {ApplicationService} from "../../services/application.service";
 import {Ng4FilesStatus, Ng4FilesSelected} from 'angular4-files-upload';
 import {Http, Response, Headers, RequestOptions} from '@angular/http';
@@ -12,10 +12,7 @@ import {FormControl, FormGroup} from "@angular/forms";
 })
 
 export class HeaderComponent {
-  public filesToUpload;
-  private onError: boolean = false;
   private onLoad;
-  private responsePanel: string = null;
   form: FormGroup;
   @ViewChild('file') file: ElementRef;
 
@@ -27,12 +24,14 @@ export class HeaderComponent {
   }
 
   handleFileInput(event) {
+    //this.applicationService.data.clearMessage();
     let body = new FormData();
     let file = event.target.files[0];
     body.set(Constants.getFileStatement(), file);
     this.applicationService.rest.doPost(Constants.getFileUploadUrl()+this.applicationService.data.session, body).subscribe(x=> {
-       console.log(x.text());
-      clearFile();
+      const result :string = x.text();
+       console.log("Operation status: "+result);
+      this.clearFile();
     })
   }
 
@@ -88,6 +87,7 @@ export class HeaderComponent {
   // }
 
   clearFile() {
+    console.log("Clearing input!");
     this.form.get('file').setValue(null);
     this.file.nativeElement.value = '';
   }
