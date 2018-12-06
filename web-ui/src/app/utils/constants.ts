@@ -2,6 +2,7 @@ export class Constants {
 
   public static get HOME_URL(): string {
     return "http://localhost:8081";
+    //return "http://35.165.83.26:8081";
   };
 
   public static get SESSION(): string {
