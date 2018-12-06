@@ -59,6 +59,7 @@ public class CountryServiceImpl implements CountryService {
         }
     }
 
+
     @Override
     public Flux<CountryContent> getLastRequests(String code) {
         return repository.findAllByCountryCode(code);
