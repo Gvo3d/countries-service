@@ -20,10 +20,6 @@ export class Constants {
     return Constants.HOME_URL + Constants.WEB_SOCKET;
   }
 
-  public static getWebSocketUploadUrl(): string {
-    return "/app/private";
-  }
-
   public static getSessionUrl(): string {
     return Constants.HOME_URL + Constants.SESSION;
   }

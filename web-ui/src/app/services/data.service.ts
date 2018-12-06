@@ -1,5 +1,4 @@
 import {Inject, Injectable, OnInit} from "@angular/core";
-import {Headers, Http} from "@angular/http";
 import {Observable} from "../../../node_modules/rxjs/Observable";
 import {Subject} from "rxjs";
 import {Response} from "../model/response-dto";

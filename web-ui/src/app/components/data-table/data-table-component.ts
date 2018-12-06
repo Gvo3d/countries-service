@@ -3,7 +3,6 @@ import {Subscription} from "rxjs/Subscription";
 import {Response} from "../../model/response-dto";
 import {Observable} from "rxjs/Observable";
 import {ApplicationService} from "../../services/application.service";
-import {filter, map} from "rxjs/operators";
 
 @Component({
   selector: 'data',
@@ -20,19 +19,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
   constructor(private applicationService: ApplicationService) {
     this.isEmpty = true;
     this.responses = [];
-    //this.initWsContext();
   }
-
-  // initWsContext(){
-  //   this.applicationService.ws.messageReceived.pipe(filter((response) => {
-  //     console.log("response from server: "+JSON.stringify(response));
-  //     return true;
-  //     //return response.countryCode !=null;
-  //   }),map((response) => {
-  //     this.responses.push(response);
-  //     //return response.data;
-  //   }));
-  // }
 
   ngOnDestroy(): void {
     this.responseSubscription.unsubscribe();
@@ -40,21 +27,15 @@ export class DataTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    //this.applicationService.ws.init();
     this.applicationService.data.getMessage().subscribe((value: Response) => {
-      console.log("value passed from the data service: "+JSON.stringify(value));
-      this.isEmpty = false;
-      this.responses.push(value);
+      if (typeof value == 'undefined'){
+        this.responses = [];
+        this.isEmpty = true;
+      } else {
+        console.log("value passed from the data service: " + JSON.stringify(value));
+        this.isEmpty = false;
+        this.responses.push(value);
+      }
     });
   }
-
-
-  //
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   this.applicationService.ws.getMessageSourceAsObservable().subscribe((value: Response) => {
-  //     this.isEmpty = false;
-  //     console.log("data - on changes");
-  //     this.responses.push(value);
-  //   })
-  // }
 }
