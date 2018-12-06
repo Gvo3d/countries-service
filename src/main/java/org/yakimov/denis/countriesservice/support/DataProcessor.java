@@ -1,7 +1,6 @@
 package org.yakimov.denis.countriesservice.support;
 
 import org.apache.log4j.Logger;
-import org.springframework.web.multipart.MultipartFile;
 import org.yakimov.denis.countriesservice.dtos.FileDto;
 import org.yakimov.denis.countriesservice.dtos.RequestDto;
 import org.yakimov.denis.countriesservice.models.CountryContent;

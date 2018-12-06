@@ -1,16 +1,16 @@
-package org.yakimov.denis.countriesservice;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class CountriesServiceApplicationTests {
-
-    @Test
-    public void contextLoads() {
-    }
-
-}
+//package org.yakimov.denis.countriesservice;
+//
+//import org.junit.Test;
+//import org.junit.runner.RunWith;
+//import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.test.context.junit4.SpringRunner;
+//
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
+//public class CountriesServiceApplicationTests {
+//
+//    @Test
+//    public void contextLoads() {
+//    }
+//
+//}

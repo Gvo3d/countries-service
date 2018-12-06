@@ -5,7 +5,6 @@ public class Constants {
     public static final String ZIPSUFFIX = ".zip";
     public static final String REQUESTING = "Requesting: %s";
     public static final String PROCESSING = "Processing request for file: %s";
-    static final String CREATED_ZIP = "Created ZipArchive model: %s";
     static final String CREATED_FILE = "Created FileData model: %s";
     static final String CREATED_COUNTRIES_LIST = "Created CountriesContentlist: %s";
     static final String RESTRESPONSE = "RestResponse";
@@ -20,8 +19,6 @@ public class Constants {
     public static final String UNKNOWN = "Unknown error!";
     public static final String EMPTY_FILE = "Zip file was empty, can't process that file";
     public static final long SIZE = 10;
-    public static final String FILE_PARAM= "file";
-    public static final String SESSION_MARKER = "session";
-    public static final String URL = "/countries/{"+SESSION_MARKER+"}";
-    public static final String SESSION_URL = "/session";
+    private static final String SESSION_MARKER = "session";
+    public static final String SOCKET_RESPONSE_URL = "/queue/reply";
 }

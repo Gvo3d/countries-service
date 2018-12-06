@@ -2,6 +2,7 @@ spring:
   data:
     mongodb:
       database: countries
+      #host: 127.0.0.1
       host: 35.165.83.26
       port: 27017
       username: cntr
