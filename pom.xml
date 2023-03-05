@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <name>countries-service</name>
-    <description></description>
+    <description/>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -62,7 +62,7 @@
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
-            <version>1.23</version>
+            <version>1.33</version>
         </dependency>
 
         <dependency>
